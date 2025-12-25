@@ -70,5 +70,31 @@ module.exports = {
         } catch (error) {
             return res.status(500).json({message: "Erro ao buscar cliente", error: error.message})
         }
+    },
+
+    update: async (req, res) => {
+        try {
+            const { id } = req.params
+            const { nome, email, telefone, endereco } = req.body
+            
+            const idNum = parseInt(id, 10)
+            if (!id || Number.isNaN(idNum)) {
+                return res.status(400).json({ message: "ID inválido" })
+            }
+            
+            if (!nome && !email && !telefone && !endereco) {
+                return res.status(400).json({ message: 'Pelo menos um campo deve ser informado' })
+            }
+            
+            const result = await clienteModel.update(idNum, nome, email, telefone, endereco)
+            if (result && result.affectedRows > 0) {
+                return res.status(200).json({ message: "Cliente atualizado com sucesso" })
+            } else {
+                return res.status(404).json({ message: 'Cliente não encontrado' })
+            }
+            
+        } catch (error) {
+            return res.status(500).json({ message: "Erro ao atualizar cliente", error: error.message })
+        }
     }
 }

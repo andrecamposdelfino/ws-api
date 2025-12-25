@@ -40,7 +40,40 @@ module.exports = {
             const [result] = await conexao.query(query, [id])
             return result
         }catch(error){
-            console.log("Não foi possível adicionar o cliente: " + error)
+            console.log("Não foi possível deletar o cliente: " + error)
+            return null 
+        }
+    },
+
+    update: async (id, nome, email, telefone, endereco) => {
+        try {
+            const campos = []
+            const valores = []
+            
+            if (nome) {
+                campos.push("nome = ?")
+                valores.push(nome)
+            }
+            if (email) {
+                campos.push("email = ?")
+                valores.push(email)
+            }
+            if (telefone) {
+                campos.push("telefone = ?")
+                valores.push(telefone)
+            }
+            if (endereco) {
+                campos.push("endereco = ?")
+                valores.push(endereco)
+            }
+            
+            valores.push(id)
+            
+            const query = `UPDATE cliente SET ${campos.join(", ")} WHERE id = ?`
+            const [result] = await conexao.query(query, valores)
+            return result
+        } catch (error) {
+            console.log("Não foi possível atualizar o cliente: " + error)
             return null 
         }
     }
