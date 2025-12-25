@@ -32,5 +32,16 @@ module.exports = {
             console.log("Não foi possível adicionar o cliente: " + error)
             return null
         }
+    },
+
+    deletar: async (id) => {
+        try{
+            const query = "DELETE FROM cliente WHERE id = ?"
+            const [result] = await conexao.query(query, [id])
+            return result
+        }catch(error){
+            console.log("Não foi possível adicionar o cliente: " + error)
+            return null 
+        }
     }
 }

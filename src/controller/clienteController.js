@@ -52,5 +52,23 @@ module.exports = {
         } catch (error) {
             res.status(500).json({ message: 'Erro ao cadastrar o cliente', error: error.message })
         }
+    },
+
+    deletar: async (req, res) => {
+        try {
+            const {id} = req.params
+            const idNum = parseInt(id, 10)
+            if(!id || Number.isNaN(idNum)){
+                return res.status(400).json({message: "ID Invalido"})
+            }
+            const rows = await clienteModel.deletar(idNum)
+            if(rows && rows.length > 0){
+                return res.status(200).json(rows[0])
+            }else{
+                return res.status(404).json({message: "Cliente não encontado"})
+            }
+        } catch (error) {
+            return res.status(500).json({message: "Erro ao buscar cliente", error: error.message})
+        }
     }
 }
