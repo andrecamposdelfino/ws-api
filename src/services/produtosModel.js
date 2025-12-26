@@ -43,5 +43,42 @@ module.exports = {
              console.log("Erro produto não foi excluido " + error);
             return null
         }
+    },
+
+    updateProduto: async (id, titulo, descricao, preco, imagem_url) => {
+        try {
+            const campos = []
+            const valores = []
+
+            if(titulo){
+                campos.push("titulo = ?")
+                valores.push(titulo)
+            }
+
+            if(descricao){
+                campos.push("descricao = ?")
+                valores.push(descricao)
+            }
+
+            if(preco){
+                campos.push("preco = ?")
+                valores.push(preco)
+            }
+
+            if(imagem_url){
+                campos.push("imagem_url = ?")
+                valores.push(imagem_url)
+            }
+
+            valores.push(id)
+
+            const query = `UPDATE produtos SET ${campos.join(", ")} WHERE id = ?`
+            const [result] = conexao.query(query, valores)
+            return result
+
+        } catch (error) {
+            console.log("Não foi possível atualizar o produto: " + error)
+            return null 
+        }
     }
 }

@@ -65,5 +65,33 @@ module.exports = {
         } catch (error) {
             return res.status(500).json({message: "Erro ao buscar o produto", error})
         }
+    },
+
+    updateProduto: async (req, res) => {
+        try {
+            const {id} = req.params
+            const {titulo, descricao, preco, imagem_url} = req.body
+
+            const idNum = parseInt(id, 10)
+            if(!id || Number.isNaN(idNum)){
+                return res.status(400).json({message: "ID Invalido"})
+            }
+
+            if(!titulo && !descricao && !preco && !imagem_url){
+                return res.status(400).json({message: "Pelo menos um campo deve ser informado"})
+            }
+
+            const result = await produtosModel.updateProduto(idNum, titulo, descricao, preco, imagem_url)
+
+            if(result && result.affectedRows > 0){
+                return res.status(200).json({message: "Produto atualizado com sucesso"})
+
+            }else{
+                return res.status(404).json({message: "Produto não encontrado"})
+            }
+
+        } catch (error) {
+            return res.status(500).json({message: "Erro ao atualizar o produto", error: error.message})
+        }
     }
 }
