@@ -78,7 +78,7 @@ module.exports = {
             const { nome, email, telefone, endereco } = req.body
             
             const idNum = parseInt(id, 10)
-            if (!id || Number.isNaN(idNum)) {
+            if (!id || Number.isNaN(idNum)) {               
                 return res.status(400).json({ message: "ID inválido" })
             }
             
