@@ -22,10 +22,10 @@ module.exports = {
         }
     },
 
-    criarItemPedido: async (pedido_id, produto_id, quantidade, preco_unitario, observacoes) => {
+    criarItemPedido: async (cliente_id, produto_id, quantidade, preco_unitario, observacoes) => {
         try {
-            const query = "INSERT INTO itens_pedido (pedido_id, produto_id, quantidade, preco_unitario, observacoes) VALUES (?, ?, ?, ?, ?)"
-            const [result] = await conexao.query(query, [pedido_id, produto_id, quantidade, preco_unitario, observacoes])
+            const query = "INSERT INTO itens_pedido (cliente_id, produto_id, quantidade, preco_unitario, observacoes) VALUES (?, ?, ?, ?, ?)"
+            const [result] = await conexao.query(query, [cliente_id, produto_id, quantidade, preco_unitario, observacoes])
             return result
         } catch (error) {
             console.log("Erro ao criar o item do pedido ", error);
@@ -44,10 +44,10 @@ module.exports = {
         }
     },
 
-    updateItemPedido: async (pedido_id, produto_id, quantidade, preco_unitario, observacoes, id) => {
+    updateItemPedido: async (cliente_id, produto_id, quantidade, preco_unitario, observacoes, id) => {
         try {
-            const query = "UPDATE itens_pedido SET pedido_id = ?, produto_id = ?, quantidade = ?, preco_unitario = ?, observacoes = ? WHERE id = ?"
-            const [result] = await conexao.query(query, [pedido_id, produto_id, quantidade, preco_unitario, observacoes, id])
+            const query = "UPDATE itens_pedido SET cliente_id = ?, produto_id = ?, quantidade = ?, preco_unitario = ?, observacoes = ? WHERE id = ?"
+            const [result] = await conexao.query(query, [cliente_id, produto_id, quantidade, preco_unitario, observacoes, id])
             return result
         } catch (error) {
             console.log("Erro ao atualizar itens do pedido: " + error)

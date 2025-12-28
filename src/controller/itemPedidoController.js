@@ -37,12 +37,12 @@ module.exports = {
 
     criarItemPedido: async (req, res) => {
         try {
-            const {pedido_id, produto_id, quantidade, preco_unitario, observacoes} = req.body
-            if(!pedido_id || !produto_id || !quantidade || !preco_unitario || !observacoes){
+            const {cliente_id, produto_id, quantidade, preco_unitario, observacoes} = req.body
+            if(!cliente_id || !produto_id || !quantidade || !preco_unitario || !observacoes){
                 return res.status(400).json({message: "Todos os campos são obrigatorios"})
             }
 
-            const result = await itemPedidoModel.criarItemPedido(pedido_id, produto_id, quantidade, preco_unitario, observacoes)
+            const result = await itemPedidoModel.criarItemPedido(cliente_id, produto_id, quantidade, preco_unitario, observacoes)
             if(result && result.affectedRows > 0){
                 return res.status(201).json({message: "Item de pedido adicionado", id: result.insertId})
             }else{
@@ -75,18 +75,18 @@ module.exports = {
     updateItemPedido: async (req, res) => {
         try {
             const {id} = req.params
-            const {pedido_id, produto_id, quantidade, preco_unitario, observacoes} = req.body
+            const {cliente_id, produto_id, quantidade, preco_unitario, observacoes} = req.body
             const idNum = parseInt(id, 10)
 
             if(!id || Number.isNaN(idNum)){
                 return res.status(400).json({message: "ID Invalido"})
             }
 
-            if(!pedido_id && !produto_id && !quantidade && preco_unitario && !observacoes){
+            if(!cliente_id && !produto_id && !quantidade && preco_unitario && !observacoes){
                 return res.status(400).json({message: "Pelo menos um campo deve ser informado"})
             }
 
-            const result = await itemPedidoModel.updateItemPedido(idNum, pedido_id, produto_id, quantidade, preco_unitario, observacoes)
+            const result = await itemPedidoModel.updateItemPedido(idNum, cliente_id, produto_id, quantidade, preco_unitario, observacoes)
             if(result && result.affectedRows > 0){
                 return res.status(200).json({message: "Item de padido atualizado"})
             }else{
